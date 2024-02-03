@@ -4,6 +4,7 @@ import { Task } from "@/lib/types";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import clsx from "clsx";
 import { Button } from "../button/icon-button";
+import Link from "next/link";
 
 /**
  * ======================================================
@@ -40,20 +41,23 @@ type TaskComponentProps = ComponentProps<"li"> & {
 };
 
 export async function Task({ task, className, ...props }: TaskComponentProps) {
-  const { title, description, date, isCompleted, isImportant } = task;
+  const { title, description, date, isCompleted, isImportant, id } = task;
   return (
     <li
       className={cn(
-        clsx(" border border-border bg-card h-[150px] p-md overflow-hidden", {
+        clsx(" border border-border bg-card h-[170px] overflow-hidden", {
           "border-important": isImportant,
         })
       )}
       {...props}
     >
-      <div className="flex flex-col text-[12px] justify-between items-stretch h-full">
+      <Link
+        href={`/task/${id}`}
+        className="flex flex-col text-[12px] justify-between items-stretch h-full p-md"
+      >
         <h1 className="text-[16px] font-semibold line-clamp-1">{title}</h1>
-        <p>{description}</p>
-        <p className="text-card-foreground/80 mt-auto font-semibold text-[10px] line-clamp-3">
+        <p className="line-clamp-3">{description}</p>
+        <p className="text-card-foreground/80 mt-auto font-semibold text-[10px]">
           {date}
         </p>
         <div className=" flex gap-1 justify-between items-center text-[10px]">
@@ -78,7 +82,7 @@ export async function Task({ task, className, ...props }: TaskComponentProps) {
           />
           <Button variant={"iconOnly"} icon={<FaTrash size={14} />} />
         </div>
-      </div>
+      </Link>
     </li>
   );
 }
