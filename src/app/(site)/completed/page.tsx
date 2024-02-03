@@ -1,5 +1,5 @@
-import Tasks from "@/components/tasks/tasks";
+import { TasksWrapper } from "@/components/dashboard/tasks-wrapper";
 
 export default function CompletedPage() {
-  return <h1>Completed</h1>;
+  return <TasksWrapper tasks={[]} title="Completed Page" />;
 }

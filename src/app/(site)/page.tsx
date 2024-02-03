@@ -1,5 +1,10 @@
+import { getTasksByUserIdActions } from "@/actions/getTaskActions";
+import { TasksWrapper } from "@/components/dashboard/tasks-wrapper";
 import React from "react";
 
-export default function DashboardPage() {
-  return <h1>All Task</h1>;
+async function DashboardPage() {
+  const tasks = await getTasksByUserIdActions("");
+  return <TasksWrapper tasks={tasks} title="All Task" />;
 }
+
+export default DashboardPage;

@@ -1,5 +1,5 @@
-import Tasks from "@/components/tasks/tasks";
+import { TasksWrapper } from "@/components/dashboard/tasks-wrapper";
 
 export default function IncompletePage() {
-  return <h1>Incomplete Page</h1>;
+  return <TasksWrapper tasks={[]} title="Incomplete Page" />;
 }

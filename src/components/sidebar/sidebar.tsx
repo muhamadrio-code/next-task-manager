@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import createContext from "@/contexts/create-context";
 import clsx from "clsx";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const SideBar: FC<ComponentProps<"div">> = ({
   children,
@@ -29,11 +29,10 @@ export const SideBar: FC<ComponentProps<"div">> = ({
           flex-col
           justify-between
           overflow-hidden
-          rounded-3xl
-          min-w-[240px]
-          max-w-fit
-          border-border
-          border-2
+          w-[180px]
+          max-w-[240px]
+          min-w-0
+          flex-grow-none
         `
         )}
       >
@@ -53,7 +52,7 @@ export const SideBarHeader: FC<SideBarHeaderProps> = ({
   return (
     <div
       {...props}
-      className=" py-4 px-6 flex flex-[2] flex-col justify-center items-center flex-grow-[auto] flex-shrink-none bg-slate-800"
+      className=" px-xl flex flex-[2] flex-col justify-center items-center flex-grow-[auto] flex-shrink-none gap-md"
     >
       {children}
     </div>
@@ -138,22 +137,26 @@ export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
         className,
         clsx(
           `
-          w-full 
-          py-2 px-8 
+          py-sm
+          px-xl
           hover:bg-primary/5
           cursor-pointer 
-          after:w-1
-          after:h-[100%]
-          after:absolute
-          after:bg-primary
-          after:rounded-tl-full
-          after:rounded-bl-full
-          after:top-0
-          after:right-0
+          font-semibold
+          text-[12px] 
+          tracking-wide 
+          relative
+          before:w-1
+          before:h-[100%]
+          before:absolute
+          before:bg-primary
+          before:rounded-tl-full
+          before:rounded-bl-full
+          before:top-0
+          before:right-0
           `,
           {
             "bg-primary/10": activeMenu === value,
-            relative: activeMenu === value,
+            "before:content-none": activeMenu !== value,
           }
         )
       )}
@@ -174,7 +177,7 @@ export const SideBarFooter: FC<SideBarFooterProps> = ({
   return (
     <div
       {...props}
-      className=" py-4 px-6 flex flex-col justify-end items-center bg-slate-700 flex-grow-none flex-shrink-none"
+      className="text-sm flex flex-col justify-center items-start flex-grow-none flex-shrink-none p-xl"
     >
       {children}
     </div>

@@ -1,5 +1,5 @@
-import Tasks from "@/components/tasks/tasks";
+import { TasksWrapper } from "@/components/dashboard/tasks-wrapper";
 
 export default function ImportantPage() {
-  return <h1>Important</h1>;
+  return <TasksWrapper tasks={[]} title="Important Page" />;
 }
