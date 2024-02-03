@@ -3,7 +3,7 @@ import React, { ComponentProps } from "react";
 import { Task } from "@/lib/types";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import clsx from "clsx";
-import { IconButton } from "../button/icon-button";
+import { Button } from "../button/icon-button";
 
 /**
  * ======================================================
@@ -57,31 +57,26 @@ export async function Task({ task, className, ...props }: TaskComponentProps) {
           {date}
         </p>
         <div className=" flex gap-1 justify-between items-center text-[10px]">
-          <button
-            className={cn(
-              clsx(
-                " rounded-full px-2 py-1 font-semibold bg-destructive focus:outline-none tracking-wider",
-                {
-                  "bg-green-600": isCompleted,
-                }
-              )
-            )}
-          >
-            {isCompleted ? "Completed" : "Incomplete"}
-          </button>
+          <Button
+            className={isCompleted ? "bg-green-600" : "bg-destructive"}
+            size={"small"}
+            variant={"custom"}
+            text={isCompleted ? "Completed" : "Incomplete"}
+          />
           {isImportant && (
-            <button className=" rounded-full px-2 py-1 font-semibold bg-orange-400 focus:outline-none tracking-wider">
-              Important
-            </button>
+            <Button
+              className="bg-orange-400"
+              variant={"custom"}
+              text="Important"
+              size={"small"}
+            />
           )}
-          <IconButton
-            className="bg-transparent ml-auto text-foreground"
+          <Button
+            className="ml-auto"
+            variant={"iconOnly"}
             icon={<FaEdit size={14} />}
           />
-          <IconButton
-            className="bg-transparent text-foreground"
-            icon={<FaTrash size={14} />}
-          />
+          <Button variant={"iconOnly"} icon={<FaTrash size={14} />} />
         </div>
       </div>
     </li>

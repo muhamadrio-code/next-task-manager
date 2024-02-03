@@ -3,7 +3,7 @@ import { ComponentProps, FC, Suspense } from "react";
 import { Tasks } from "../tasks/tasks";
 import { Task } from "@/lib/types";
 import { ScrollArea } from "../ui/scroll-area";
-import { IconButton } from "../button/icon-button";
+import { Button } from "../button/icon-button";
 import { MdAdd } from "react-icons/md";
 
 type TasksWrapperComponentProps = ComponentProps<"div"> & {
@@ -28,7 +28,7 @@ export const TasksWrapper: FC<TasksWrapperComponentProps> = ({
     >
       <div className="flex justify-between items-center p-xl">
         <TasksWrapperTitle value={title} />
-        <IconButton text="Add Task" icon={<MdAdd size={14} />} />
+        <Button text="Add Task" icon={<MdAdd size={14} />} />
       </div>
       <ScrollArea className="w-full h-full px-xl pt-xl">
         <Suspense fallback={"Loading..."}>

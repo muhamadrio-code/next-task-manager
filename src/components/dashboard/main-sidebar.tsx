@@ -13,7 +13,7 @@ import menu from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import { IconButton } from "../button/icon-button";
+import { Button } from "../button/icon-button";
 
 export const MainSideBar = () => {
   const path = usePathname();
@@ -45,7 +45,7 @@ export const MainSideBar = () => {
         </SideBarMenuList>
       </SidebarMenu>
       <SideBarFooter>
-        <IconButton
+        <Button
           text="Sign Out"
           icon={<FaLongArrowAltLeft size={14} />}
           className="w-full"
