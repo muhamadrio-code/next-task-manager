@@ -1,18 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, {
-  ComponentProps,
-  FC,
-  Dispatch,
-  useEffect,
-  useState,
-} from "react";
-import createContext from "@/contexts/create-context";
+import React, { ComponentProps, FC } from "react";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link, { LinkProps } from "next/link";
 
-export const SideBar: FC<ComponentProps<"div">> = ({
+/**
+ * ======================================================
+ * SideBar
+ * ======================================================
+ */
+
+export const SideBarRoot: FC<ComponentProps<"div">> = ({
   children,
   className,
   ...props
@@ -42,6 +42,12 @@ export const SideBar: FC<ComponentProps<"div">> = ({
   );
 };
 
+/**
+ * ======================================================
+ * SideBarHeader
+ * ======================================================
+ */
+
 type SideBarHeaderProps = ComponentProps<"div">;
 
 export const SideBarHeader: FC<SideBarHeaderProps> = ({
@@ -52,58 +58,48 @@ export const SideBarHeader: FC<SideBarHeaderProps> = ({
   return (
     <div
       {...props}
-      className=" px-xl flex flex-[2] flex-col justify-center items-center flex-grow-[auto] flex-shrink-none gap-md"
+      className=" p-xl flex flex-[2] flex-col justify-start items-start flex-grow-[auto] gap-md"
     >
       {children}
     </div>
   );
 };
 
+/**
+ * ======================================================
+ * SidebarMenu
+ * ======================================================
+ */
+
 type SideBarMenuProps = ComponentProps<"div"> & {
   children: React.ReactNode;
 };
-type SideBarMenuContextValue = ComponentProps<"div"> & {
-  activeMenu: string;
-  setActiveMenu: Dispatch<React.SetStateAction<string>>;
-};
-
-const [SideBarMenuProvider, useSidebarMenuContext] =
-  createContext<SideBarMenuContextValue>("sidebar-menu");
 
 export const SidebarMenu = ({
   children,
   className,
   ...props
 }: SideBarMenuProps) => {
-  const [activeMenu, setActiveMenu] = useState("");
-
   return (
     <div {...props} className={cn(className, " flex flex-[8] items-center")}>
-      <SideBarMenuProvider
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-      >
-        {children}
-      </SideBarMenuProvider>
+      {children}
     </div>
   );
 };
 
-type SideBarMenuListProps = ComponentProps<"ul"> & {
-  defaultValue: string;
-};
+/**
+ * ======================================================
+ * SideBarMenuList
+ * ======================================================
+ */
+
+type SideBarMenuListProps = ComponentProps<"ul">;
 
 export const SideBarMenuList: FC<SideBarMenuListProps> = ({
-  defaultValue,
   className,
   children,
   ...props
 }) => {
-  const { setActiveMenu } = useSidebarMenuContext("sidebar-menu-list");
-  useEffect(() => {
-    setActiveMenu(defaultValue);
-  }, []);
-
   return (
     <ul {...props} className={cn(className, " w-full")}>
       {children}
@@ -111,36 +107,37 @@ export const SideBarMenuList: FC<SideBarMenuListProps> = ({
   );
 };
 
-type SideBarMenuItemProps = ComponentProps<"li"> & {
-  value: string;
+/**
+ * ======================================================
+ * SideBarMenuItem
+ * ======================================================
+ */
+
+type SideBarMenuLinkProps = LinkProps & {
+  children: React.ReactNode;
+  className: string;
 };
 
-export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
-  value,
+export const SideBarMenuLink: FC<SideBarMenuLinkProps> = ({
   className,
   children,
+  href,
   ...props
 }) => {
-  const { activeMenu, setActiveMenu } =
-    useSidebarMenuContext("sidebar-menu-list");
-
-  const router = useRouter();
-  const setActive = () => {
-    setActiveMenu(value);
-    router.push(value);
-  };
+  const path = usePathname();
 
   return (
-    <li
-      {...props}
-      className={cn(
-        className,
-        clsx(
-          `
-          py-sm
+    <li>
+      <Link
+        {...props}
+        href={href}
+        className={cn(
+          className,
+          clsx(
+            `
+            w-full h-full py-sm
           px-xl
           hover:bg-primary/5
-          cursor-pointer 
           font-semibold
           text-[12px] 
           tracking-wide 
@@ -154,18 +151,24 @@ export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
           before:top-0
           before:right-0
           `,
-          {
-            "bg-primary/10": activeMenu === value,
-            "before:content-none": activeMenu !== value,
-          }
-        )
-      )}
-      onClick={setActive}
-    >
-      {children}
+            {
+              "bg-primary/10": path === href,
+              "before:content-none": path !== href,
+            }
+          )
+        )}
+      >
+        {children}
+      </Link>
     </li>
   );
 };
+
+/**
+ * ======================================================
+ * SideBarFooter
+ * ======================================================
+ */
 
 type SideBarFooterProps = ComponentProps<"div">;
 

@@ -3,7 +3,7 @@ import React, { ComponentProps } from "react";
 import { Task } from "@/lib/types";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import clsx from "clsx";
-import { Button } from "../button/icon-button";
+import { Button } from "../button/button";
 import Link from "next/link";
 
 /**

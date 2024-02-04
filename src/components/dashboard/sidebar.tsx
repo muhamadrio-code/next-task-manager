@@ -2,26 +2,26 @@
 
 import React from "react";
 import {
-  SideBar,
+  SideBarRoot,
   SideBarFooter,
   SideBarHeader,
-  SideBarMenuItem,
+  SideBarMenuLink,
   SideBarMenuList,
   SidebarMenu,
 } from "../sidebar/sidebar";
-import menu from "@/lib/utils";
+import menus from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import { Button } from "../button/icon-button";
+import { Button } from "../button/button";
 
-export const MainSideBar = () => {
+export const SideBar = () => {
   const path = usePathname();
 
   return (
-    <SideBar className=" flex-1">
+    <SideBarRoot>
       <SideBarHeader>
-        <div className="flex gap-sm w-full h-full text-sm font-semibold justify-center items-center">
+        <div className="flex gap-sm w-full text-sm font-semibold">
           <div className=" min-w-[45px] min-h-[45px] max-h-[45px] rounded-full overflow-clip">
             <Image src="/monalisa.jpg" alt="profile" width={45} height={45} />
           </div>
@@ -29,17 +29,17 @@ export const MainSideBar = () => {
         </div>
       </SideBarHeader>
       <SidebarMenu>
-        <SideBarMenuList defaultValue={path ?? "/"}>
-          {menu.map((me) => {
+        <SideBarMenuList>
+          {menus.map((menu) => {
             return (
-              <SideBarMenuItem
-                key={me.title}
-                value={me.path}
+              <SideBarMenuLink
+                key={menu.title}
+                href={menu.href}
                 className=" flex gap-sm items-center"
               >
-                <me.icon size={18} />
-                {me.title}
-              </SideBarMenuItem>
+                <menu.icon size={18} />
+                {menu.title}
+              </SideBarMenuLink>
             );
           })}
         </SideBarMenuList>
@@ -51,6 +51,6 @@ export const MainSideBar = () => {
           className="w-full"
         />
       </SideBarFooter>
-    </SideBar>
+    </SideBarRoot>
   );
 };

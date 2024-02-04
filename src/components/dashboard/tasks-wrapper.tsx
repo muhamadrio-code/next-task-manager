@@ -3,19 +3,55 @@ import { ComponentProps, FC, Suspense } from "react";
 import { Tasks } from "../tasks/tasks";
 import { Task } from "@/lib/types";
 import { ScrollArea } from "../ui/scroll-area";
-import { Button } from "../button/icon-button";
+import { Button } from "../button/button";
 import { MdAdd } from "react-icons/md";
 
-type TasksWrapperComponentProps = ComponentProps<"div"> & {
+/**
+ * ======================================================
+ * TasksWrapper
+ * ======================================================
+ */
+
+type TasksWrapperComponentProps = {
   title: string;
   tasks: Task[];
 };
 
 export const TasksWrapper: FC<TasksWrapperComponentProps> = ({
   title,
+  tasks,
+}) => {
+  return (
+    <TasksWrapperRoot>
+      <TasksWrapperHeader>
+        <TasksWrapperTitle value={title} />
+        <Button text="Add Task" icon={<MdAdd size={14} />} />
+      </TasksWrapperHeader>
+      <ScrollArea>
+        <TasksWrapperContent>
+          <Suspense fallback={"Loading..."}>
+            <Tasks tasks={tasks} />
+          </Suspense>
+        </TasksWrapperContent>
+      </ScrollArea>
+    </TasksWrapperRoot>
+  );
+};
+
+/**
+ * ======================================================
+ * TasksWrapperRoot
+ * ======================================================
+ */
+
+type TasksWrapperRootComponentProps = Pick<
+  ComponentProps<"section">,
+  "className" | "children"
+>;
+
+export const TasksWrapperRoot: FC<TasksWrapperRootComponentProps> = ({
   className,
   children,
-  tasks,
   ...props
 }) => {
   return (
@@ -26,16 +62,43 @@ export const TasksWrapper: FC<TasksWrapperComponentProps> = ({
         " w-full h-full flex flex-col overflow-hidden divide-y-2"
       )}
     >
-      <div className="flex justify-between items-center p-xl">
-        <TasksWrapperTitle value={title} />
-        <Button text="Add Task" icon={<MdAdd size={14} />} />
-      </div>
-      <ScrollArea className="w-full h-full px-xl pt-xl">
-        <Suspense fallback={"Loading..."}>
-          <Tasks tasks={tasks} />
-        </Suspense>
-      </ScrollArea>
+      {children}
     </section>
+  );
+};
+
+/**
+ * ======================================================
+ * TasksWrapperHeader
+ * ======================================================
+ */
+
+type TasksWrapperContentComponentProps = ComponentProps<"div">;
+
+export const TasksWrapperContent: FC<TasksWrapperContentComponentProps> = ({
+  children,
+}) => {
+  return <div className="w-full h-full p-xl">{children}</div>;
+};
+
+/**
+ * ======================================================
+ * TasksWrapperHeader
+ * ======================================================
+ */
+
+type TasksWrapperHeaderComponentProps = Pick<
+  ComponentProps<"div">,
+  "className" | "children"
+>;
+
+export const TasksWrapperHeader: FC<TasksWrapperHeaderComponentProps> = ({
+  children,
+}) => {
+  return (
+    <div className="flex justify-between items-center p-xl min-h-[74px] max-h-[74px]">
+      {children}
+    </div>
   );
 };
 

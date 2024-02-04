@@ -12,25 +12,25 @@ const menu = [
   {
     id: 1,
     title: "All Tasks",
-    path: "/",
+    href: "/",
     icon: PiListDashesFill,
   },
   {
     id: 2,
     title: "Important!",
-    path: "/important",
+    href: "/important",
     icon: LuFileWarning,
   },
   {
     id: 3,
     title: "Completed!",
-    path: "/completed",
+    href: "/completed",
     icon: PiListChecksFill,
   },
   {
     id: 4,
     title: "Do It Now",
-    path: "/incomplete",
+    href: "/incomplete",
     icon: RiTodoFill,
   },
 ];
