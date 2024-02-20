@@ -49,6 +49,11 @@ export const SideBar = () => {
           text="Sign Out"
           icon={<FaLongArrowAltLeft size={14} />}
           className="w-full"
+          onClick={async () => {
+            const resp = await fetch("/api/v1/tasks");
+            const data = await resp.json();
+            console.log(data);
+          }}
         />
       </SideBarFooter>
     </SideBarRoot>
